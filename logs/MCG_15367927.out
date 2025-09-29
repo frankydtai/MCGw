@@ -1,0 +1,369 @@
+----------------- Options ---------------
+               batch_size: 8                             
+                 ckpt_dir: results/TaiHF/ckpts           
+           continue_train: False                         
+        cycle_loss_lambda: 10                            
+              decay_after: 100000.0                      
+                   device: cuda                          
+         discriminator_lr: 0.0001                        
+          epochs_per_plot: 100                           
+          epochs_per_save: 500                           
+             generator_lr: 0.0002                        
+                  gpu_ids: ['cuda:0']                    
+     identity_loss_lambda: 5                             
+                  isTrain: True                          
+               load_epoch: 0                             
+                max_ckpts: 3                             
+             max_mask_len: 25                            
+                     name: TaiHF                         
+               num_epochs: 2000                          
+               num_frames: 64                            
+    num_frames_validation: 320                           
+    preprocessed_data_dir: vcc2018_preprocessed/vcc2018_training
+              sample_rate: 22050                         
+                 save_dir: results/                      
+                     seed: 0                             
+             speaker_A_id: OldHF                         
+             speaker_B_id: NewHF                         
+              start_epoch: 1                             
+          steps_per_print: 100                           
+      stop_identity_after: 10000.0                       
+----------------- End -------------------
+n_samples = 88
+generator_lr_decay = 9.09090909090909e-09
+discriminator_lr_decay = 4.545454545454545e-09
+Dataset object: <dataset.vc_dataset.VCDataset object at 0x14dae0eec850>
+Dataset length: 85
+Batch size: 8
+Steps per epoch: 11
+[start of epoch 1]
+(epoch: 1, iter: 0, time: 0.100) g_loss: 27.361 d_loss: 0.510 
+[end of epoch 1/2000, epoch time: 5.5]
+[start of epoch 2]
+(epoch: 2, iter: 0, time: 0.057) g_loss: 27.653 d_loss: 0.495 
+[end of epoch 2/2000, epoch time: 5.2]
+[start of epoch 3]
+(epoch: 3, iter: 0, time: 0.057) g_loss: 23.736 d_loss: 0.402 
+[end of epoch 3/2000, epoch time: 5.2]
+[start of epoch 4]
+(epoch: 4, iter: 0, time: 0.057) g_loss: 21.186 d_loss: 0.312 
+[end of epoch 4/2000, epoch time: 5.2]
+[start of epoch 5]
+(epoch: 5, iter: 0, time: 0.057) g_loss: 21.127 d_loss: 0.330 
+[end of epoch 5/2000, epoch time: 5.2]
+[start of epoch 6]
+(epoch: 6, iter: 0, time: 0.057) g_loss: 21.901 d_loss: 0.298 
+[end of epoch 6/2000, epoch time: 5.2]
+[start of epoch 7]
+(epoch: 7, iter: 0, time: 0.057) g_loss: 21.080 d_loss: 0.322 
+[end of epoch 7/2000, epoch time: 5.2]
+[start of epoch 8]
+(epoch: 8, iter: 0, time: 0.057) g_loss: 19.789 d_loss: 0.345 
+[end of epoch 8/2000, epoch time: 5.2]
+[start of epoch 9]
+(epoch: 9, iter: 0, time: 0.057) g_loss: 20.455 d_loss: 0.347 
+[end of epoch 9/2000, epoch time: 5.2]
+[start of epoch 10]
+(epoch: 10, iter: 0, time: 0.057) g_loss: 19.319 d_loss: 0.361 
+[end of epoch 10/2000, epoch time: 5.2]
+[start of epoch 11]
+(epoch: 11, iter: 0, time: 0.057) g_loss: 19.935 d_loss: 0.349 
+[end of epoch 11/2000, epoch time: 5.2]
+[start of epoch 12]
+(epoch: 12, iter: 0, time: 0.057) g_loss: 19.273 d_loss: 0.365 
+[end of epoch 12/2000, epoch time: 5.2]
+[start of epoch 13]
+(epoch: 13, iter: 0, time: 0.057) g_loss: 18.209 d_loss: 0.339 
+[end of epoch 13/2000, epoch time: 5.2]
+[start of epoch 14]
+(epoch: 14, iter: 0, time: 0.057) g_loss: 18.118 d_loss: 0.379 
+[end of epoch 14/2000, epoch time: 5.2]
+[start of epoch 15]
+(epoch: 15, iter: 0, time: 0.057) g_loss: 17.482 d_loss: 0.357 
+[end of epoch 15/2000, epoch time: 5.2]
+[start of epoch 16]
+(epoch: 16, iter: 0, time: 0.057) g_loss: 17.204 d_loss: 0.405 
+[end of epoch 16/2000, epoch time: 5.2]
+[start of epoch 17]
+(epoch: 17, iter: 0, time: 0.057) g_loss: 16.345 d_loss: 0.405 
+[end of epoch 17/2000, epoch time: 5.2]
+[start of epoch 18]
+(epoch: 18, iter: 0, time: 0.057) g_loss: 16.180 d_loss: 0.393 
+[end of epoch 18/2000, epoch time: 5.2]
+[start of epoch 19]
+(epoch: 19, iter: 0, time: 0.057) g_loss: 16.827 d_loss: 0.403 
+[end of epoch 19/2000, epoch time: 5.2]
+[start of epoch 20]
+(epoch: 20, iter: 0, time: 0.057) g_loss: 17.372 d_loss: 0.395 
+[end of epoch 20/2000, epoch time: 5.2]
+[start of epoch 21]
+(epoch: 21, iter: 0, time: 0.057) g_loss: 16.003 d_loss: 0.401 
+[end of epoch 21/2000, epoch time: 5.2]
+[start of epoch 22]
+(epoch: 22, iter: 0, time: 0.057) g_loss: 15.296 d_loss: 0.411 
+[end of epoch 22/2000, epoch time: 5.2]
+[start of epoch 23]
+(epoch: 23, iter: 0, time: 0.057) g_loss: 15.625 d_loss: 0.393 
+[end of epoch 23/2000, epoch time: 5.2]
+[start of epoch 24]
+(epoch: 24, iter: 0, time: 0.057) g_loss: 14.907 d_loss: 0.411 
+[end of epoch 24/2000, epoch time: 5.2]
+[start of epoch 25]
+(epoch: 25, iter: 0, time: 0.057) g_loss: 15.319 d_loss: 0.417 
+[end of epoch 25/2000, epoch time: 5.2]
+[start of epoch 26]
+(epoch: 26, iter: 0, time: 0.057) g_loss: 15.164 d_loss: 0.409 
+[end of epoch 26/2000, epoch time: 5.2]
+[start of epoch 27]
+(epoch: 27, iter: 0, time: 0.057) g_loss: 14.442 d_loss: 0.414 
+[end of epoch 27/2000, epoch time: 5.2]
+[start of epoch 28]
+(epoch: 28, iter: 0, time: 0.057) g_loss: 14.738 d_loss: 0.415 
+[end of epoch 28/2000, epoch time: 5.2]
+[start of epoch 29]
+(epoch: 29, iter: 0, time: 0.057) g_loss: 14.890 d_loss: 0.422 
+[end of epoch 29/2000, epoch time: 5.2]
+[start of epoch 30]
+(epoch: 30, iter: 0, time: 0.057) g_loss: 14.694 d_loss: 0.414 
+[end of epoch 30/2000, epoch time: 5.2]
+[start of epoch 31]
+(epoch: 31, iter: 0, time: 0.057) g_loss: 14.846 d_loss: 0.403 
+[end of epoch 31/2000, epoch time: 5.2]
+[start of epoch 32]
+(epoch: 32, iter: 0, time: 0.057) g_loss: 14.765 d_loss: 0.401 
+[end of epoch 32/2000, epoch time: 5.2]
+[start of epoch 33]
+(epoch: 33, iter: 0, time: 0.057) g_loss: 14.773 d_loss: 0.417 
+[end of epoch 33/2000, epoch time: 5.2]
+[start of epoch 34]
+(epoch: 34, iter: 0, time: 0.057) g_loss: 14.067 d_loss: 0.402 
+[end of epoch 34/2000, epoch time: 5.2]
+[start of epoch 35]
+(epoch: 35, iter: 0, time: 0.057) g_loss: 14.725 d_loss: 0.426 
+[end of epoch 35/2000, epoch time: 5.2]
+[start of epoch 36]
+(epoch: 36, iter: 0, time: 0.057) g_loss: 14.741 d_loss: 0.423 
+[end of epoch 36/2000, epoch time: 5.2]
+[start of epoch 37]
+(epoch: 37, iter: 0, time: 0.057) g_loss: 14.111 d_loss: 0.409 
+[end of epoch 37/2000, epoch time: 5.2]
+[start of epoch 38]
+(epoch: 38, iter: 0, time: 0.057) g_loss: 14.396 d_loss: 0.405 
+[end of epoch 38/2000, epoch time: 5.2]
+[start of epoch 39]
+(epoch: 39, iter: 0, time: 0.057) g_loss: 13.946 d_loss: 0.418 
+[end of epoch 39/2000, epoch time: 5.2]
+[start of epoch 40]
+(epoch: 40, iter: 0, time: 0.057) g_loss: 13.651 d_loss: 0.412 
+[end of epoch 40/2000, epoch time: 5.2]
+[start of epoch 41]
+(epoch: 41, iter: 0, time: 0.057) g_loss: 13.229 d_loss: 0.409 
+[end of epoch 41/2000, epoch time: 5.2]
+[start of epoch 42]
+(epoch: 42, iter: 0, time: 0.057) g_loss: 13.708 d_loss: 0.445 
+[end of epoch 42/2000, epoch time: 5.2]
+[start of epoch 43]
+(epoch: 43, iter: 0, time: 0.057) g_loss: 13.160 d_loss: 0.418 
+[end of epoch 43/2000, epoch time: 5.2]
+[start of epoch 44]
+(epoch: 44, iter: 0, time: 0.057) g_loss: 13.409 d_loss: 0.420 
+[end of epoch 44/2000, epoch time: 5.2]
+[start of epoch 45]
+(epoch: 45, iter: 0, time: 0.057) g_loss: 13.089 d_loss: 0.421 
+[end of epoch 45/2000, epoch time: 5.2]
+[start of epoch 46]
+(epoch: 46, iter: 0, time: 0.057) g_loss: 13.016 d_loss: 0.425 
+[end of epoch 46/2000, epoch time: 5.2]
+[start of epoch 47]
+(epoch: 47, iter: 0, time: 0.057) g_loss: 13.817 d_loss: 0.434 
+[end of epoch 47/2000, epoch time: 5.2]
+[start of epoch 48]
+(epoch: 48, iter: 0, time: 0.058) g_loss: 13.658 d_loss: 0.389 
+[end of epoch 48/2000, epoch time: 5.2]
+[start of epoch 49]
+(epoch: 49, iter: 0, time: 0.057) g_loss: 13.107 d_loss: 0.427 
+[end of epoch 49/2000, epoch time: 5.2]
+[start of epoch 50]
+(epoch: 50, iter: 0, time: 0.057) g_loss: 13.506 d_loss: 0.416 
+[end of epoch 50/2000, epoch time: 5.2]
+[start of epoch 51]
+(epoch: 51, iter: 0, time: 0.057) g_loss: 13.804 d_loss: 0.422 
+[end of epoch 51/2000, epoch time: 5.2]
+[start of epoch 52]
+(epoch: 52, iter: 0, time: 0.057) g_loss: 13.036 d_loss: 0.436 
+[end of epoch 52/2000, epoch time: 5.2]
+[start of epoch 53]
+(epoch: 53, iter: 0, time: 0.057) g_loss: 13.516 d_loss: 0.420 
+[end of epoch 53/2000, epoch time: 5.2]
+[start of epoch 54]
+(epoch: 54, iter: 0, time: 0.057) g_loss: 12.672 d_loss: 0.424 
+[end of epoch 54/2000, epoch time: 5.2]
+[start of epoch 55]
+(epoch: 55, iter: 0, time: 0.057) g_loss: 13.041 d_loss: 0.429 
+[end of epoch 55/2000, epoch time: 5.2]
+[start of epoch 56]
+(epoch: 56, iter: 0, time: 0.057) g_loss: 13.024 d_loss: 0.420 
+[end of epoch 56/2000, epoch time: 5.2]
+[start of epoch 57]
+(epoch: 57, iter: 0, time: 0.057) g_loss: 13.384 d_loss: 0.421 
+[end of epoch 57/2000, epoch time: 5.2]
+[start of epoch 58]
+(epoch: 58, iter: 0, time: 0.057) g_loss: 13.031 d_loss: 0.425 
+[end of epoch 58/2000, epoch time: 5.2]
+[start of epoch 59]
+(epoch: 59, iter: 0, time: 0.057) g_loss: 13.099 d_loss: 0.423 
+[end of epoch 59/2000, epoch time: 5.2]
+[start of epoch 60]
+(epoch: 60, iter: 0, time: 0.057) g_loss: 12.730 d_loss: 0.403 
+[end of epoch 60/2000, epoch time: 5.2]
+[start of epoch 61]
+(epoch: 61, iter: 0, time: 0.057) g_loss: 12.674 d_loss: 0.429 
+[end of epoch 61/2000, epoch time: 5.2]
+[start of epoch 62]
+(epoch: 62, iter: 0, time: 0.057) g_loss: 12.582 d_loss: 0.425 
+[end of epoch 62/2000, epoch time: 5.2]
+[start of epoch 63]
+(epoch: 63, iter: 0, time: 0.057) g_loss: 12.590 d_loss: 0.421 
+[end of epoch 63/2000, epoch time: 5.2]
+[start of epoch 64]
+(epoch: 64, iter: 0, time: 0.057) g_loss: 12.763 d_loss: 0.428 
+[end of epoch 64/2000, epoch time: 5.2]
+[start of epoch 65]
+(epoch: 65, iter: 0, time: 0.057) g_loss: 12.502 d_loss: 0.414 
+[end of epoch 65/2000, epoch time: 5.2]
+[start of epoch 66]
+(epoch: 66, iter: 0, time: 0.057) g_loss: 12.420 d_loss: 0.417 
+[end of epoch 66/2000, epoch time: 5.2]
+[start of epoch 67]
+(epoch: 67, iter: 0, time: 0.057) g_loss: 12.821 d_loss: 0.436 
+[end of epoch 67/2000, epoch time: 5.2]
+[start of epoch 68]
+(epoch: 68, iter: 0, time: 0.057) g_loss: 12.802 d_loss: 0.425 
+[end of epoch 68/2000, epoch time: 5.2]
+[start of epoch 69]
+(epoch: 69, iter: 0, time: 0.057) g_loss: 13.085 d_loss: 0.428 
+[end of epoch 69/2000, epoch time: 5.2]
+[start of epoch 70]
+(epoch: 70, iter: 0, time: 0.057) g_loss: 11.979 d_loss: 0.416 
+[end of epoch 70/2000, epoch time: 5.2]
+[start of epoch 71]
+(epoch: 71, iter: 0, time: 0.057) g_loss: 12.278 d_loss: 0.421 
+[end of epoch 71/2000, epoch time: 5.2]
+[start of epoch 72]
+(epoch: 72, iter: 0, time: 0.057) g_loss: 12.162 d_loss: 0.419 
+[end of epoch 72/2000, epoch time: 5.2]
+[start of epoch 73]
+(epoch: 73, iter: 0, time: 0.057) g_loss: 12.336 d_loss: 0.417 
+[end of epoch 73/2000, epoch time: 5.2]
+[start of epoch 74]
+(epoch: 74, iter: 0, time: 0.058) g_loss: 12.050 d_loss: 0.429 
+[end of epoch 74/2000, epoch time: 5.2]
+[start of epoch 75]
+(epoch: 75, iter: 0, time: 0.057) g_loss: 12.909 d_loss: 0.426 
+[end of epoch 75/2000, epoch time: 5.2]
+[start of epoch 76]
+(epoch: 76, iter: 0, time: 0.057) g_loss: 12.533 d_loss: 0.402 
+[end of epoch 76/2000, epoch time: 5.2]
+[start of epoch 77]
+(epoch: 77, iter: 0, time: 0.057) g_loss: 12.109 d_loss: 0.437 
+[end of epoch 77/2000, epoch time: 5.2]
+[start of epoch 78]
+(epoch: 78, iter: 0, time: 0.057) g_loss: 12.536 d_loss: 0.413 
+[end of epoch 78/2000, epoch time: 5.2]
+[start of epoch 79]
+(epoch: 79, iter: 0, time: 0.057) g_loss: 12.270 d_loss: 0.429 
+[end of epoch 79/2000, epoch time: 5.2]
+[start of epoch 80]
+(epoch: 80, iter: 0, time: 0.057) g_loss: 12.121 d_loss: 0.416 
+[end of epoch 80/2000, epoch time: 5.2]
+[start of epoch 81]
+(epoch: 81, iter: 0, time: 0.057) g_loss: 11.748 d_loss: 0.412 
+[end of epoch 81/2000, epoch time: 5.2]
+[start of epoch 82]
+(epoch: 82, iter: 0, time: 0.057) g_loss: 12.302 d_loss: 0.431 
+[end of epoch 82/2000, epoch time: 5.2]
+[start of epoch 83]
+(epoch: 83, iter: 0, time: 0.057) g_loss: 12.105 d_loss: 0.415 
+[end of epoch 83/2000, epoch time: 5.2]
+[start of epoch 84]
+(epoch: 84, iter: 0, time: 0.057) g_loss: 11.953 d_loss: 0.422 
+[end of epoch 84/2000, epoch time: 5.3]
+[start of epoch 85]
+(epoch: 85, iter: 0, time: 0.057) g_loss: 12.162 d_loss: 0.421 
+[end of epoch 85/2000, epoch time: 5.2]
+[start of epoch 86]
+(epoch: 86, iter: 0, time: 0.057) g_loss: 11.860 d_loss: 0.423 
+[end of epoch 86/2000, epoch time: 5.2]
+[start of epoch 87]
+(epoch: 87, iter: 0, time: 0.057) g_loss: 12.118 d_loss: 0.427 
+[end of epoch 87/2000, epoch time: 5.2]
+[start of epoch 88]
+(epoch: 88, iter: 0, time: 0.058) g_loss: 11.790 d_loss: 0.416 
+[end of epoch 88/2000, epoch time: 5.2]
+[start of epoch 89]
+(epoch: 89, iter: 0, time: 0.057) g_loss: 12.120 d_loss: 0.426 
+[end of epoch 89/2000, epoch time: 5.2]
+[start of epoch 90]
+(epoch: 90, iter: 0, time: 0.057) g_loss: 11.745 d_loss: 0.416 
+[end of epoch 90/2000, epoch time: 5.2]
+[start of epoch 91]
+(epoch: 91, iter: 0, time: 0.057) g_loss: 11.751 d_loss: 0.429 
+[end of epoch 91/2000, epoch time: 5.2]
+[start of epoch 92]
+(epoch: 92, iter: 0, time: 0.057) g_loss: 11.959 d_loss: 0.413 
+[end of epoch 92/2000, epoch time: 5.2]
+[start of epoch 93]
+(epoch: 93, iter: 0, time: 0.057) g_loss: 12.442 d_loss: 0.418 
+[end of epoch 93/2000, epoch time: 5.2]
+[start of epoch 94]
+(epoch: 94, iter: 0, time: 0.057) g_loss: 11.739 d_loss: 0.423 
+[end of epoch 94/2000, epoch time: 5.2]
+[start of epoch 95]
+(epoch: 95, iter: 0, time: 0.057) g_loss: 11.633 d_loss: 0.419 
+[end of epoch 95/2000, epoch time: 5.2]
+[start of epoch 96]
+(epoch: 96, iter: 0, time: 0.057) g_loss: 11.485 d_loss: 0.421 
+[end of epoch 96/2000, epoch time: 5.2]
+[start of epoch 97]
+(epoch: 97, iter: 0, time: 0.057) g_loss: 11.180 d_loss: 0.413 
+[end of epoch 97/2000, epoch time: 5.2]
+[start of epoch 98]
+(epoch: 98, iter: 0, time: 0.057) g_loss: 11.452 d_loss: 0.415 
+[end of epoch 98/2000, epoch time: 5.2]
+[start of epoch 99]
+(epoch: 99, iter: 0, time: 0.057) g_loss: 11.712 d_loss: 0.402 
+[end of epoch 99/2000, epoch time: 5.2]
+[start of epoch 100]
+(epoch: 100, iter: 0, time: 0.057) g_loss: 11.810 d_loss: 0.418 
+Job ID           : 15367927
+Cluster          : spartan
+User/Project     : yitai/punim0477
+Nodes            : 1
+Wall-clock time  : 00:08:48 / 09:00:00
+
+Displaying overall resources usage from 2025-09-08 18:29:22 to 2025-09-08 18:38:10:
+
+NODE            CPU#        TOT%   ( USR   / SYS   / WIO   / IDLE  ) 
+
+spartan-gpgpu004 : 
+                CPU# 1    : 98.9   (  72.8 /  26.1 /   0.0 /   1.1 ) 
+
+                            UTIL%   MEM-USG-AVG  MEM-USG-MAX  TOT-MEM   
+                GPU# 1    : 92.3     5386.8M      5415.0M     46068.0M 
+
+
+Allocated CPUs            : 1    
+  CPUs with usage <25%    : 0    
+  CPUs with usage <50%    : 0    
+  CPUs with usage >50%    : 1    
+
+
+Allocated GPUs            : 1    
+  GPUs with usage <25%    : 0    
+  GPUs with usage <50%    : 0    
+  GPUs with usage >50%    : 1    
+
+Memory used (RAM)         : 2.7%  [2862MB of 107375MB]
+
+--------------------------------------------
+

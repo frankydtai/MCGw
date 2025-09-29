@@ -24,3 +24,7 @@ class CycleGANTestArgParser(BaseArgParser):
             '--ckpt_dir', type=str, default=None, help='Path to model ckpt.')
         self.parser.add_argument(
             '--model_name', type=str, choices=('generator_A2B', 'generator_B2A'), default='generator_A2B', help='Name of model to load.')
+        self.parser.add_argument(
+            "--converted_audio_subdir", type=str, default="converted_audio", help="Subfolder name where converted audio files will be saved")
+        #new
+        self.parser.add_argument("--vocoder", type=str, default="hifi", choices=("mel", "hifi"), help="Which vocoder to use: 'mel' for MelGAN, 'hifi' for HiFi-GAN")

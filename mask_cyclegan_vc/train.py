@@ -84,6 +84,13 @@ class MaskCycleGANVCTraining(object):
                                                             shuffle=True,
                                                             drop_last=False)
 
+
+        print("Dataset object:", self.dataset)
+        print("Dataset length:", len(self.dataset))
+        print("Batch size:", self.mini_batch_size)
+        print("Steps per epoch:", len(self.train_dataloader))
+
+
         # Initialize Validation Dataloader (used to generate intermediate outputs)
         self.validation_dataset = VCDataset(datasetA=self.dataset_A,
                                             datasetB=self.dataset_B,
@@ -117,9 +124,9 @@ class MaskCycleGANVCTraining(object):
             list(self.discriminator_A2.parameters()) + \
             list(self.discriminator_B2.parameters())
         self.generator_optimizer = torch.optim.Adam(
-            g_params, lr=self.generator_lr, betas=(0.5, 0.999))
+            g_params, lr=self.generator_lr, betas=(0.5, 0.99))
         self.discriminator_optimizer = torch.optim.Adam(
-            d_params, lr=self.discriminator_lr, betas=(0.5, 0.999))
+            d_params, lr=self.discriminator_lr, betas=(0.5, 0.99))
 
         # Load from previous ckpt
         if args.continue_train:
@@ -135,6 +142,18 @@ class MaskCycleGANVCTraining(object):
                                   "discriminator_A2", None, None)
             self.saver.load_model(self.discriminator_B2,
                                   "discriminator_B2", None, None)
+
+        # keep schedules continuous after resume
+        self.logger.global_step = len(self.train_dataloader.dataset) * (self.start_epoch - 1)
+
+        # if identity was already off before, keep it off
+        if self.logger.global_step > self.stop_identity_after:
+            self.identity_loss_lambda = 0
+
+        # sync LR scalars with restored optimizer states
+        self.generator_lr = self.generator_optimizer.param_groups[0]['lr']
+        self.discriminator_lr = self.discriminator_optimizer.param_groups[0]['lr']
+
 
     def adjust_lr_rate(self, optimizer, generator):
         """Decays learning rate.
@@ -308,7 +327,7 @@ class MaskCycleGANVCTraining(object):
                     self.adjust_lr_rate(
                         self.generator_optimizer, generator=True)
                     self.adjust_lr_rate(
-                        self.generator_optimizer, generator=False)
+                        self.discriminator_optimizer, generator=False)
 
                 # Set identity loss to zero if larger than given value
                 if self.logger.global_step > self.stop_identity_after:

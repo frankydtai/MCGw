@@ -14,6 +14,34 @@ from mask_cyclegan_vc.utils import decode_melspectrogram
 from logger.train_logger import TrainLogger
 from saver.model_saver import ModelSaver
 
+# — at the top of test.py —
+import json            # NEW
+import hifigan         # NEW
+import yaml
+
+def load_hifigan(config, checkpoint_path="./hifigan/g_00205000", device='cuda'):
+    name = config["vocoder"]["model"]
+    speaker = config["vocoder"]["speaker"]
+    assert speaker == 'universal'
+    assert name == "HiFi-GAN16k"
+
+    #print("#### HiFI-GAN16k", name, speaker, device)
+    with open("./hifigan/config.json", "r") as f:
+        config = json.load(f)
+    config = hifigan.AttrDict(config)
+    vocoder = hifigan.Generator(config)
+    #print("### HiFI-GAN ckpt", checkpoint_path)
+    if checkpoint_path.startswith("http"):
+        ckpt = torch.hub.load_state_dict_from_url(checkpoint_path, map_location=torch.device('cpu')) if device!='cuda' else torch.hub.load_state_dict_from_url(checkpoint_path)
+    else:
+        ckpt = torch.load(checkpoint_path, map_location=torch.device('cpu')) if device!='cuda' else torch.load(checkpoint_path)
+
+    vocoder.load_state_dict(ckpt['generator'])
+    vocoder.eval()
+    vocoder.remove_weight_norm()
+    vocoder.to(device)
+
+    return vocoder
 
 class MaskCycleGANVCTesting(object):
     """Tester for MaskCycleGAN-VC
@@ -26,15 +54,19 @@ class MaskCycleGANVCTesting(object):
         """
         # Store Args
         self.device = args.device
-        self.converted_audio_dir = os.path.join(args.save_dir, args.name, 'converted_audio')
+        self.converted_audio_dir = os.path.join(args.save_dir, args.name, args.converted_audio_subdir)
         os.makedirs(self.converted_audio_dir, exist_ok=True)
         self.model_name = args.model_name
 
         self.speaker_A_id = args.speaker_A_id
         self.speaker_B_id = args.speaker_B_id
         # Initialize MelGAN-Vocoder used to decode Mel-spectrograms
-        self.vocoder = torch.hub.load(
-            'descriptinc/melgan-neurips', 'load_melgan')
+        if args.vocoder == "mel":
+            self.vocoder = torch.hub.load('descriptinc/melgan-neurips', 'load_melgan')
+        #hifi
+        else:
+            self.model_config = yaml.load(open("./hifigan/my_model.yaml", "r"), Loader=yaml.FullLoader)
+            self.vocoder = load_hifigan(self.model_config, checkpoint_path="./hifigan/g_02500000", device=self.device).eval()
         self.sample_rate = args.sample_rate
 
         # Initialize speakerA's dataset
@@ -83,6 +115,7 @@ class MaskCycleGANVCTesting(object):
             return pickle.load(f)
 
     def test(self):
+        merged_audio = []   
         for i, sample in enumerate(tqdm(self.test_dataloader)):
 
             save_path = None
@@ -96,11 +129,19 @@ class MaskCycleGANVCTesting(object):
 
                 wav_real_A = decode_melspectrogram(self.vocoder, real_A[0].detach(
                 ).cpu(), self.dataset_A_mean, self.dataset_A_std).cpu()
+
+                if wav_fake_B.ndim == 3:
+                    wav_fake_B=wav_fake_B.squeeze(1)
+                
                 save_path = os.path.join(self.converted_audio_dir, f"{i}-converted_{self.speaker_A_id}_to_{self.speaker_B_id}.wav")
                 save_path_orig = os.path.join(self.converted_audio_dir,
-                                         f"{i}-original_{self.speaker_A_id}_to_{self.speaker_B_id}.wav")
+                                        f"{i}-original_{self.speaker_A_id}_to_{self.speaker_B_id}.wav")
                 torchaudio.save(save_path, wav_fake_B, sample_rate=self.sample_rate)
                 torchaudio.save(save_path_orig, wav_real_A, sample_rate=self.sample_rate)
+                # if wav_fake_B.ndim == 3:
+                #     wav_fake_B=wav_fake_B.unsqueeze(0)
+                #merged_audio.append(wav_fake_B)
+
             else:
                 real_B = sample
                 real_B = real_B.to(self.device, dtype=torch.float)
@@ -109,15 +150,28 @@ class MaskCycleGANVCTesting(object):
                 wav_fake_A = decode_melspectrogram(self.vocoder, fake_A[0].detach(
                 ).cpu(), self.dataset_A_mean, self.dataset_A_std).cpu()
 
+                if wav_fake_A.ndim == 3:
+                    wav_fake_A=wav_fake_A.squeeze(1)
+
                 wav_real_B = decode_melspectrogram(self.vocoder, real_B[0].detach(
                 ).cpu(), self.dataset_B_mean, self.dataset_B_std).cpu()
-
                 save_path = os.path.join(self.converted_audio_dir, f"{i}-converted_{self.speaker_B_id}_to_{self.speaker_A_id}.wav")
                 save_path_orig = os.path.join(self.converted_audio_dir,
-                                         f"{i}-original_{self.speaker_B_id}_to_{self.speaker_A_id}.wav")
+                                       f"{i}-original_{self.speaker_B_id}_to_{self.speaker_A_id}.wav")
                 torchaudio.save(save_path, wav_fake_A, sample_rate=self.sample_rate)
                 torchaudio.save(save_path_orig, wav_real_B, sample_rate=self.sample_rate)
 
+                # if merged_audio.ndim == 3:
+                #     wav_fake_A=wav_fake_A.unsqueeze(0)
+                #merged_audio.append(wav_fake_A)
+
+            # merged_wav = torch.cat(merged_audio, dim=1)
+            # # if merged_wav.ndim == 3:                              # e.g., [1, 1, T] -> [1, T]
+            # #     merged_wav = merged_wav.squeeze(0)
+            # # if merged_wav.ndim == 1:                              # ensure [C, T]
+            # #     merged_wav = merged_wav.unsqueeze(0)
+            # merged_path = os.path.join(self.converted_audio_dir, "merged.wav")
+            # torchaudio.save(merged_path, merged_wav , sample_rate=self.sample_rate)
 
 if __name__ == "__main__":
     parser = CycleGANTestArgParser()

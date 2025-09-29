@@ -26,12 +26,35 @@ SAMPLING_RATE = 22050  # Fixed sampling rate
 def normalize_mel(wavspath):
     wav_files = glob.glob(os.path.join(
         wavspath, '**', '*.wav'), recursive=True)  # source_path
-    vocoder = torch.hub.load('descriptinc/melgan-neurips', 'load_melgan')
+    #vocoder = torch.hub.load('descriptinc/melgan-neurips', 'load_melgan')
 
     mel_list = list()
     for wavpath in tqdm(wav_files, desc='Preprocess wav to mel'):
         wav_orig, _ = librosa.load(wavpath, sr=SAMPLING_RATE, mono=True)
-        spec = vocoder(torch.tensor([wav_orig]))
+        
+        if args.vocoder=="mel":
+            spec = vocoder(torch.tensor([wav_orig]))
+
+        else: #Hifi
+            device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+            y = torch.from_numpy(wav_orig).unsqueeze(0).float().to(device)  # [B, T]
+
+            y = torch.nn.functional.pad(y.unsqueeze(1), (int((1024 - 256) // 2), int((1024 - 256) // 2)), mode='reflect')
+            y = y.squeeze(1)
+        
+            spec = torch.stft(y, n_fft=1024, hop_length=256, win_length=1024, window=torch.hann_window(1024, device=y.device),
+                                center=False, pad_mode='reflect', normalized=False, onesided=True,)
+
+            spec = torch.sqrt(spec.pow(2).sum(-1) + 1e-9)
+
+            mel_basis = librosa_mel_fn(22050, 1024, 80, 0, 8000)
+            mel_basis = torch.from_numpy(mel_basis).to(y.device).float()
+            spec = torch.matmul(mel_basis, spec)
+            spec = torch.log(torch.clamp(spec, min=1e-5))
+
+        print("spec shape:", spec.shape)
+        #print("spec sample values:", spec[0, :, :5])
 
         if spec.shape[-1] >= 64:    # training sample consists of 64 randomly cropped frames
             mel_list.append(spec.cpu().detach().numpy()[0])
@@ -47,7 +70,6 @@ def normalize_mel(wavspath):
         mel_normalized.append(app)
 
     return mel_normalized, mel_mean, mel_std
-
 
 def save_pickle(variable, fileName):
     with open(fileName, 'wb') as f:
@@ -93,7 +115,9 @@ if __name__ == '__main__':
                         help='Directory holding preprocessed VCC2018 dataset.')
     parser.add_argument('--speaker_ids', nargs='+', type=str, default=['VCC2SM3', 'VCC2TF1'],
                         help='Source speaker id from VCC2018.')
-
+    #new
+    parser.add_argument("--vocoder", type=str, default="hifi", choices=["hifi", "mel"],
+                        help="Mel front end: 'hifi' uses STFT→mel→log; 'mel' uses MelGAN's feature extractor")
     args = parser.parse_args()
 
     for speaker_id in args.speaker_ids:

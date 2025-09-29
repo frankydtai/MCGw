@@ -35,8 +35,13 @@ def decode_melspectrogram(vocoder, melspectrogram, mel_mean, mel_std):
         torch.Tensor: decoded Mel-spectrogram
     """
     denorm_converted = melspectrogram * mel_std + mel_mean
-    rev = vocoder.inverse(denorm_converted.unsqueeze(0))
-    return rev
+    if hasattr(vocoder, "inverse"):  # MelGAN
+        rev = vocoder.inverse(denorm_converted.unsqueeze(0))
+        return rev
+    else: #hifi
+        dev = next(vocoder.parameters()).device
+        rev = vocoder(denorm_converted.unsqueeze(0).to(dev))
+        return rev.squeeze(1)
 
 
 def get_mel_spectrogram_fig(spec, title="Mel-Spectrogram"):

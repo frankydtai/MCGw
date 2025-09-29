@@ -48,4 +48,4 @@ class CycleGANTrainArgParser(TrainArgParser):
             '--max_mask_len', type=int, default=32, help='Maximum length of mask for Mask-CycleGAN-VC.'
         )
 
-        self.parser.set_defaults(batch_size=1, num_epochs=50, decay_after=1e4, start_epoch=1, steps_per_print=100, num_frames=64)
+        self.parser.set_defaults(batch_size=1, num_epochs=50, decay_after=2e5, start_epoch=1, steps_per_print=100, num_frames=64)
