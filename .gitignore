@@ -139,3 +139,5 @@ results/
 
 *.out
 *.ckpt
+/hifigan/g_02500000
+/hifigan/do_02500000
