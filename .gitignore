@@ -141,3 +141,10 @@ results/
 *.ckpt
 /hifigan/g_02500000
 /hifigan/do_02500000
+# large weights
+/hifigan/g_02500000
+/hifigan/do_02500000
+*.ckpt
+*.pt
+*.pth
+*.bin
