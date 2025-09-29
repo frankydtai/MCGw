@@ -43,15 +43,15 @@ fi
 python -W ignore::UserWarning -m mask_cyclegan_vc.test \
     --name Tai4 \
     --save_dir results/ \
-    --converted_audio_subdir "4000m" \
+    --converted_audio_subdir "4000zh" \
     --preprocessed_data_dir vcc2018_preprocessed/vcc2018_evaluation \
     --gpu_ids 0 \
-    --speaker_A_id OldmMEL \
-    --speaker_B_id NewmMEL \
+    --speaker_A_id Old \
+    --speaker_B_id New \
     --ckpt_dir results/Tai4/ckpts \
     --load_epoch 4000 \
     --model_name generator_B2A \
-    --vocoder mel \
+    --vocoder hifi_zh \
 
 ##DO NOT ADD/EDIT BEYOND THIS LINE##
 ##Job monitor command to list the resource usage

@@ -27,4 +27,4 @@ class CycleGANTestArgParser(BaseArgParser):
         self.parser.add_argument(
             "--converted_audio_subdir", type=str, default="converted_audio", help="Subfolder name where converted audio files will be saved")
         #new
-        self.parser.add_argument("--vocoder", type=str, default="hifi", choices=("mel", "hifi"), help="Which vocoder to use: 'mel' for MelGAN, 'hifi' for HiFi-GAN")
+        self.parser.add_argument("--vocoder", type=str, default="hifi_cn", choices=("mel", "hifi", "hifi_zh"), help="Which vocoder to use: 'mel' for MelGAN, 'hifi' for HiFi-GAN")

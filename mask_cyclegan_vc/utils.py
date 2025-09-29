@@ -38,7 +38,7 @@ def decode_melspectrogram(vocoder, melspectrogram, mel_mean, mel_std):
     if hasattr(vocoder, "inverse"):  # MelGAN
         rev = vocoder.inverse(denorm_converted.unsqueeze(0))
         return rev
-    else: #hifi
+    else:  # hifi
         dev = next(vocoder.parameters()).device
         rev = vocoder(denorm_converted.unsqueeze(0).to(dev))
         return rev.squeeze(1)
@@ -56,21 +56,15 @@ def get_mel_spectrogram_fig(spec, title="Mel-Spectrogram"):
     """
     figure, ax = plt.subplots()
     canvas = FigureCanvas(figure)
-    S_db = librosa.power_to_db(10**spec.numpy().squeeze(), ref=np.max)
-    img = librosa.display.specshow(S_db, ax=ax, y_axis='log', x_axis='time')
-    
+    S_db = librosa.power_to_db(10 ** spec.numpy().squeeze(), ref=np.max)
+    img = librosa.display.specshow(S_db, ax=ax, y_axis="log", x_axis="time")
+
     buf = io.BytesIO()
-    plt.savefig(buf, format='jpeg')
+    plt.savefig(buf, format="jpeg")
     buf.seek(0)
-        
+
     image = Image.open(buf)
     image = ToTensor()(image)
-    
+
     plt.close(figure)
     return image
-
-    
-            
-            
-        
-    
