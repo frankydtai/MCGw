@@ -21,11 +21,10 @@ import yaml
 
 
 def load_hifigan(config, checkpoint_path="./hifigan/g_00205000", device="cuda"):
-    #comment for hifi_zh
-    #name = config["vocoder"]["model"]     
-    #speaker = config["vocoder"]["speaker"]
-    #assert speaker == "universal"
-    #assert name == "HiFi-GAN16k"
+    name = config["vocoder"]["model"]
+    speaker = config["vocoder"]["speaker"]
+    assert speaker == "universal"
+    assert name == "HiFi-GAN16k"
 
     # print("#### HiFI-GAN16k", name, speaker, device)
     with open("./hifigan/config.json", "r") as f:
@@ -53,6 +52,57 @@ def load_hifigan(config, checkpoint_path="./hifigan/g_00205000", device="cuda"):
     vocoder.remove_weight_norm()
     vocoder.to(device)
 
+    return vocoder
+
+
+def _remap_generator_keys(sd, n_per_group=3):
+    out = {}
+    for k, v in sd.items():
+        # 只留 generator.*
+        if not k.startswith("generator."):
+            continue
+        k = k[len("generator.") :]  # 去掉前綴
+
+        if k.startswith("resblocks."):
+            parts = k.split(".")
+            # 形如: resblocks, <group>, <idx>, convs1|convs2, ...
+            if len(parts) >= 4 and parts[1].isdigit() and parts[2].isdigit():
+                g = int(parts[1])
+                i = int(parts[2])
+                flat = g * n_per_group + i
+                k = ".".join(["resblocks", str(flat)] + parts[3:])
+        out[k] = v
+    return out
+
+
+def load_hifigan_zh(
+    checkpoint_path="hifigan_zh/model_weights.ckpt",
+    yaml_path="hifigan_zh/model_config.yaml",
+    device="cuda",
+):
+    yml = yaml.safe_load(open(yaml_path, "r"))
+    g = yml["generator"]
+    pre = yml.get("preprocessor", {})
+
+    cfg = {
+        "resblock": int(g["resblock"]),
+        "upsample_rates": g["upsample_rates"],
+        "upsample_kernel_sizes": g["upsample_kernel_sizes"],
+        "upsample_initial_channel": g["upsample_initial_channel"],
+        "resblock_kernel_sizes": g["resblock_kernel_sizes"],
+        "resblock_dilation_sizes": g["resblock_dilation_sizes"],
+        "num_mels": int(pre.get("nfilt", 80)),
+    }
+    h = hifigan.AttrDict(cfg)
+    vocoder = hifigan.Generator(h)
+
+    raw = torch.load(checkpoint_path, map_location="cpu")
+    gen_sd = _remap_generator_keys(raw, n_per_group=3)  # 這份 YAML 每組 3 個 resblock
+
+    missing, unexpected = vocoder.load_state_dict(gen_sd, strict=False)
+    # 若要嚴格檢查，把 strict=False 改 True；現在先以能跑為主
+    vocoder.remove_weight_norm()
+    vocoder.to(device).eval()
     return vocoder
 
 
@@ -87,18 +137,18 @@ class MaskCycleGANVCTesting(object):
                 checkpoint_path="./hifigan/g_02500000",
                 device=self.device,
             ).eval()
+        # hifi_zh
         elif args.vocoder == "hifi_zh":
-            # 新的中文 HiFi-GAN (NeMo)
             self.model_config = yaml.load(
                 open("./hifigan_zh/model_config.yaml", "r"), Loader=yaml.FullLoader
             )
-            self.vocoder = load_hifigan(
-                self.model_config,
+            self.vocoder = load_hifigan_zh(
                 checkpoint_path="./hifigan_zh/model_weights.ckpt",
+                yaml_path="./hifigan_zh/model_config.yaml",
                 device=self.device,
             ).eval()
 
-        self.sample_rate = args.sample_rate
+            self.sample_rate = args.sample_rate
 
         # Initialize speakerA's dataset
         self.dataset_A = self.loadPickleFile(

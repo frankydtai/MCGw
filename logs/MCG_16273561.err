@@ -1,0 +1,31 @@
+  0%|          | 0/1 [00:00<?, ?it/s]  0%|          | 0/1 [00:02<?, ?it/s]
+Traceback (most recent call last):
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/test.py", line 261, in <module>
+    tester.test()
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/test.py", line 213, in test
+    fake_A = self.generator(real_B, torch.ones_like(real_B))
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/model.py", line 245, in forward
+    downsample1 = self.downSample1(conv1)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/model.py", line 103, in forward
+    return self.convLayer(x) * torch.sigmoid(self.convLayer_gates(x))
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/instancenorm.py", line 72, in forward
+    return self._apply_instance_norm(input)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/instancenorm.py", line 32, in _apply_instance_norm
+    return F.instance_norm(
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/functional.py", line 2483, in instance_norm
+    return torch.instance_norm(
+RuntimeError: cuDNN error: CUDNN_STATUS_EXECUTION_FAILED

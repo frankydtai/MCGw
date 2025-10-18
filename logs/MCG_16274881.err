@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/test.py", line 260, in <module>
+    tester = MaskCycleGANVCTesting(args)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/test.py", line 95, in __init__
+    self.vocoder = load_hifigan(
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/test.py", line 51, in load_hifigan
+    vocoder.load_state_dict(ckpt["generator"])
+KeyError: 'generator'

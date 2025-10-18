@@ -1,0 +1,27 @@
+  0%|          | 0/1 [00:00<?, ?it/s]  0%|          | 0/1 [00:02<?, ?it/s]
+Traceback (most recent call last):
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/test.py", line 261, in <module>
+    tester.test()
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/test.py", line 225, in test
+    wav_real_B = decode_melspectrogram(
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/mask_cyclegan_vc/utils.py", line 43, in decode_melspectrogram
+    rev = vocoder(denorm_converted.unsqueeze(0).to(dev))
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/hifigan/models.py", line 159, in forward
+    xs += self.resblocks[i * self.num_kernels + j](x)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/scratch/projects/punim0477/yitai/MaskCycleGAN-VC/hifigan/models.py", line 99, in forward
+    xt = c1(xt)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/conv.py", line 307, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/data/scratch/projects/punim0477/yitai/miniforge3/envs/MCG/lib/python3.9/site-packages/torch/nn/modules/conv.py", line 303, in _conv_forward
+    return F.conv1d(input, weight, bias, self.stride,
+RuntimeError: CUDA out of memory. Tried to allocate 1.74 GiB (GPU 0; 44.52 GiB total capacity; 39.33 GiB already allocated; 1.51 GiB free; 41.16 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

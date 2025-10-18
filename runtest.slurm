@@ -3,7 +3,7 @@
 # Tue Sep 02 2025 21:34:35 GMT+0800 (China Standard Time)
 
 # Partition for the job:
-#SBATCH --partition=gpu-l40s
+#SBATCH --partition=sapphire
 
 # Multithreaded (SMP) job: must run on one node 
 #SBATCH --nodes=1
@@ -16,12 +16,15 @@
 #SBATCH --cpus-per-task=1
 
 # Number of GPUs requested per node:
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:0
 # The amount of memory in megabytes per node:
 #SBATCH --mem=102400
 
 # The maximum running time of the job in days-hours:mins:sec
 #SBATCH --time=0-0:10:00
+
+#SBATCH --output=logs/%x_%j.out
+#SBATCH --error=logs/%x_%j.err
 
 # check that the script is launched with sbatch
 if [ "x$SLURM_JOB_ID" == "x" ]; then
@@ -37,19 +40,19 @@ fi
 #which python
 #python -c "import torch; print('torch version:', torch.__version__)"
 
-#export PYTHONUNBUFFERED=1
-#export TQDM_DISABLE=1
+export PYTHONUNBUFFERED=1
+export TQDM_DISABLE=1
 
 python -W ignore::UserWarning -m mask_cyclegan_vc.test \
-    --name Tai4 \
+    --name TaiHF \
     --save_dir results/ \
-    --converted_audio_subdir "4000zh" \
+    --converted_audio_subdir "4000hfzh" \
     --preprocessed_data_dir vcc2018_preprocessed/vcc2018_evaluation \
     --gpu_ids 0 \
-    --speaker_A_id Old \
-    --speaker_B_id New \
+    --speaker_A_id Oldm \
+    --speaker_B_id Xinm \
     --ckpt_dir results/Tai4/ckpts \
-    --load_epoch 4000 \
+    --load_epoch 2000 \
     --model_name generator_B2A \
     --vocoder hifi_zh \
 
